@@ -18,15 +18,19 @@ $(function(){
 		e.preventDefault();
 
 		$('#evaluation').empty();
-
+		var targetword=$('#target-word').text()
+		var guess=$('#guess')
 		$.post('/quizSubmit',
 			{
-				wordForTrans: $('#target-word').text(),
-				guess:$('#guess').val()
+				wordForTrans: targetword,
+				guess:guess.val()
 			},
 			function(data){
-				$('#evaluation').append(data)
-		})
-	})
+				$('#evaluation').append(data.answer)
+				$('#target-word').text(data.newword)
+				guess.val('')
+			}
+		);
+	});
 
 })

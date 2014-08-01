@@ -1,7 +1,7 @@
 var BeGlobal=require('../models/api.js');
 var list=require('../models/word-list.js');
 
-
+var count=0;
 
 var indexController = {
 	index: function(req, res) {
@@ -62,15 +62,23 @@ var indexController = {
 		});
 	},
 	quizSubmit: function(req,res){
+		count++;
+		count=count%10;
 		indexController.translateWord(req.body.wordForTrans, function(result){
 			var answer = result.translation.toLowerCase();
 			var guess = req.body.guess.toLowerCase();
 
 			if( guess === answer ){
-				res.send('correct')
+				res.send({
+					answer:'correct',
+					newword:list[count]
+				})
 			}
 			else{
-				res.send(answer);
+				res.send({
+					answer:'incorrect',
+					newword:list[count]
+				});
 			}
 
 
