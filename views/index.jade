@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	form#translateForm(method='post', action='/translate')
+		input.inputField(type='text', name="origin", placeholder='translate from')
+		input.inputField(type='text', name="dest", placeholder="translate to English or French")
+		input.inputField(type='text', name='word', placeholder="word to translate")
+		input(type='submit', value="translate")
+	a(href="/quiz") Quiz Page
+
+block script
+	script(src='index.js')
