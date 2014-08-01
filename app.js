@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var indexController = require('./controllers/index.js');
+var indexController = require('./controllers/index-controller.js');
 
 var app = express();
 app.set('view engine', 'jade');
@@ -12,7 +12,7 @@ app.get('/', indexController.index);
 
 app.post('/translate', indexController.translate);
 
-app.get('/quiz', indexController.quiz);
+app.get('/quizPage', indexController.quizPage);
 
 app.post('/quizSubmit', indexController.quizSubmit);
 

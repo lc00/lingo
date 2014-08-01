@@ -1,12 +1,11 @@
 extends layout
 
-
-
-
 block content
 	h2 Quiz Page
-	form#quizForm(method='post' action='/quizSubmit') #{list[0]}
+	form#quizForm 
+		#target-word
+			| #{list}
 		input#guess(type='text' name='english' placeholder='Put French Translation Here')
 		input(type='submit' value='Check Answer!')
-block script
-	script(src='index.js')
+	p#evaluation
+

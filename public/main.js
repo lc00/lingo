@@ -8,16 +8,24 @@ $(function(){
 		e.preventDefault();
 		$.post('/translate', data, function(results){
 			console.log(results)
-			$('body').append('<p>' + results + '</p>');
+			$('body').append('<p>' + results.translation + '</p>');
 
 		})
-		$('.inputField').val('')
+		$('.inputField').val('');
 	})
 	
 	$('#quizForm').on('submit', function(e){
 		e.preventDefault();
-		$.post('/quizSubmit',{guess:$('#guess').val()},function(data){
-			console.log(data)
+
+		$('#evaluation').empty();
+
+		$.post('/quizSubmit',
+			{
+				wordForTrans: $('#target-word').text(),
+				guess:$('#guess').val()
+			},
+			function(data){
+				$('#evaluation').append(data)
 		})
 	})
 
