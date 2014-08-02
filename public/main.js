@@ -18,17 +18,18 @@ $(function(){
 		e.preventDefault();
 
 		$('#evaluation').empty();
-		var targetword=$('#target-word').text()
+		var targetword=$('#target-word')
 		var guess=$('#guess')
 		$.post('/quizSubmit',
 			{
-				wordForTrans: targetword,
+				wordForTrans: targetword.text(),
 				guess:guess.val()
 			},
 			function(data){
 				$('#evaluation').append(data.answer)
-				$('#target-word').text(data.newword)
+				targetword.text(data.newword)
 				guess.val('')
+
 			}
 		);
 	});
