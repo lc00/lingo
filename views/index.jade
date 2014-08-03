@@ -2,9 +2,11 @@ extends layout
 
 block content
 	form#translateForm
-		input.inputField(type='text', name="origin", placeholder='translate from')
-		input.inputField(type='text', name="dest", placeholder="translate to English or French")
-		input.inputField(type='text', name='word', placeholder="word to translate")
+		input#langFrom.inputField(type='text', name="origin", placeholder='translate from')
+		input#langTo.inputField(type='text', name="dest", placeholder="translate to English or French")
+		input#wordForTrans.inputField(type='text', name='word', placeholder="word to translate")
 		input(type='submit', value="translate")
+	p
+		h3#translationResult
 	a(href="/quizPage") Quiz Page
 

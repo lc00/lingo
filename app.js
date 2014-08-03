@@ -12,6 +12,7 @@ app.get('/', indexController.index);
 
 app.post('/translate', indexController.translate);
 
+//quiz page link is clicked
 app.get('/quizPage', indexController.quizPage);
 
 app.post('/quizSubmit', indexController.quizSubmit);

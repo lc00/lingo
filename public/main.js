@@ -3,19 +3,26 @@ $.fn.serializeObject=function(){"use strict";var a={},b=function(b,c){var d=a[c.
 var clientSideCount = 0;
 
 $(function(){
-
+	// when translate button is clicked, sends translate request and 
+	// appends result to the page
 	$('#translateForm').on('submit', function(e){
-		var data=$('#translateForm').serializeObject()
-		data.something='test'
+		var data=$('#translateForm').serializeObject();
+		data.something='test';
 		e.preventDefault();
+
+		var input = $('#wordForTrans').val();
+
 		$.post('/translate', data, function(results){
 			console.log(results)
-			$('body').append('<p>' + results.translation + '</p>');
+			$('#translationResult').append('<p>' + input + ': ' + results.translation + '</p>');
 
 		})
+
+		//empty all input fields
 		$('.inputField').val('');
 	})
 	
+	// 
 	$('#quizForm').on('submit', function(e){
 		e.preventDefault();
 

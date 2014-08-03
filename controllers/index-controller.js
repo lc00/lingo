@@ -1,7 +1,7 @@
 var BeGlobal=require('../models/api.js');
 var list=require('../models/word-list.js');
 var mongoose = require('mongoose');
-var Quiz = require('../models/data.js');
+var Quiz = require('../models/quiz.js');
 
 mongoose.connect('mongodb://localhost/funQuiz');
 
@@ -48,41 +48,29 @@ var indexController = {
 			var quiz = new Quiz({
 				userSubmit: guess,
 				translation: answer
-			})
-		
+			});
+			if( guess === answer ){
 
-				if( guess === answer ){
+				quiz.correctness = "correct";
 
-					quiz.correctness = "correct";
+				res.send({
+					answer:'correct',
+					newword:list[count],
+					count:count
+				})
+			}
+			else{
+				quiz.correctness = "incorrect";
 
-					res.send({
-						answer:'correct',
-						newword:list[count],
-						count:count
-					})
-				}
-				else{
-					quiz.correctness = "incorrect";
-
-					res.send({
-						answer:'incorrect',
-						newword:list[count],
-						count:count
-					});
-				}
-
-				quiz.save();
-				count++;
-
-			
-
+				res.send({
+					answer:'incorrect',
+					newword:list[count],
+					count:count
+				});
+			}
+			quiz.save();
+			count++;
 		})	
-
-
-		
-		// res.send('text')
-		//compare guess to translated sent list item
-	
 	},
 	getResult: function(req, res){
 		Quiz.find({correctness: 'correct'},function(err,result){
