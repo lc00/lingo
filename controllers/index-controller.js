@@ -17,7 +17,6 @@ var indexController = {
 		  api_token: '5KCVfjJg0ykZn4FKpGfXAQ%3D%3D'
 		});
 
-
 		beglobal.translations.translate(
 	  	{text: word, from: 'eng', to: 'fra'},
 	  	function(err, results) {
@@ -42,7 +41,6 @@ var indexController = {
 		});
 	},
 	quizSubmit: function(req,res){
-		count++;
 		indexController.translateWord(req.body.wordForTrans, function(result){
 			var answer = result.translation.toLowerCase();
 			var guess = req.body.guess.toLowerCase();
@@ -51,47 +49,32 @@ var indexController = {
 				userSubmit: guess,
 				translation: answer
 			})
-			if(count >= 3){
-				Quiz.find({},function(err,result){
-					// res.render('index')
+		
 
-					//window.location.href="url";
+				if( guess === answer ){
 
-				})
-			}
+					quiz.correctness = "correct";
 
-			else if( guess === answer ){
-
-				quiz.correctness = "correct";
-
-				res.send({
-					answer:'correct',
-					newword:list[count],
-					count:count
-				})
-			}
-			else{
-				quiz.correctness = "incorrect";
-
-				res.send({
-					answer:'incorrect',
-					newword:list[count],
-					count:count
-				});
-			}
-
-
-			quiz.save(function(error, result){
-				if(error){
-					console.log(error)
+					res.send({
+						answer:'correct',
+						newword:list[count],
+						count:count
+					})
 				}
 				else{
-					console.log(result)
+					quiz.correctness = "incorrect";
+
+					res.send({
+						answer:'incorrect',
+						newword:list[count],
+						count:count
+					});
 				}
 
-			})
+				quiz.save();
+				count++;
 
-
+			
 
 		})	
 
@@ -101,6 +84,17 @@ var indexController = {
 		//compare guess to translated sent list item
 	
 	},
+	getResult: function(req, res){
+		Quiz.find({correctness: 'correct'},function(err,result){
+			res.send(result);
+			count = 0;
+
+			Quiz.remove({}, function(err){
+				console.log('collection removed');
+			})
+		});
+	},
+
 	checkAnswer: function(req, res){
 		// var 
 		

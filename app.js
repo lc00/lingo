@@ -16,7 +16,7 @@ app.get('/quizPage', indexController.quizPage);
 
 app.post('/quizSubmit', indexController.quizSubmit);
 
-// app.get('/result', indexController.quizSubmit);
+app.post('/getResult', indexController.getResult);
 
 var server = app.listen(3863, function() {
 	console.log('Express server listening on port ' + server.address().port);
