@@ -7,20 +7,34 @@ $(function(){
 	// appends result to the page
 	$('#translateForm').on('submit', function(e){
 		var data=$('#translateForm').serializeObject();
-		data.something='test';
+		// data.something='test';
 		e.preventDefault();
 
 		var input = $('#wordForTrans').val();
 
 		$.post('/translate', data, function(results){
-			console.log(results)
 			$('#translationResult').append('<p>' + input + ': ' + results.translation + '</p>');
 
 		})
 
 		//empty all input fields
 		$('.inputField').val('');
-	})
+	});
+
+	$('#startQuiz').on('submit', function(e){
+		e.preventDefault();
+
+		//hide startQuiz(form) 
+		//show quizForm
+
+		$.post('/startQuiz', {
+			from: $('#transFrom').val(),
+			to: $('#transTo').val()
+		},
+		function(data){
+
+		});
+	});
 	
 	// 
 	$('#quizForm').on('submit', function(e){

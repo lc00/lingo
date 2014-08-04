@@ -2,7 +2,12 @@ extends layout
 
 block content
 	h2 Quiz Page
-	form#quizForm 
+	form#quizSetUp
+		input#transFrom(type="text", name='english', placeholder="language to translate from")
+		input#transTo(type="text", name='french', placeholder="language to translate to")
+		input#startQuiz(type='submit' value='Start Quiz')
+	
+	form#quizForm
 		#target-word
 			| #{list}
 		input#guess(type='text' name='english' placeholder='Put French Translation Here')

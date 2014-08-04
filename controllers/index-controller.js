@@ -3,6 +3,7 @@ var list=require('../models/word-list.js');
 var mongoose = require('mongoose');
 var Quiz = require('../models/quiz.js');
 
+
 mongoose.connect('mongodb://localhost/funQuiz');
 
 var count=0;
@@ -11,14 +12,16 @@ var indexController = {
 	index: function(req, res) {
 		res.render('index');
 	},
-	translateWord: function(word, cb){
+	translateWord: function(obj, cb){
 		//initialize the BeGlobal API
 		var beglobal = new BeGlobal.BeglobalAPI({
 		  api_token: '5KCVfjJg0ykZn4FKpGfXAQ%3D%3D'
 		});
 
+		// console.log(obj);
+
 		beglobal.translations.translate(
-	  	{text: word, from: 'eng', to: 'fra'},
+	  	{text: obj.word, from: obj.origin, to: obj.dest},
 	  	function(err, results) {
 		    if (err) {
 		      return console.log(err);
@@ -27,17 +30,40 @@ var indexController = {
   		});
 	},
 	translate: function(req, res){
-		var word=req.body.word;
 
-		indexController.translateWord(word, function(data){
+		var transObj = {
+			word: req.body.word,
+			origin: req.body.origin,
+			dest: req.body.dest
+		};
+
+		indexController.translateWord(transObj, function(data){
 			res.send(data);
 		});
 	},
-	// render the quize page
+	startQuiz: function(req, res){
+		var from = req.body.from;
+		var to = req.body.to;
+
+
+		//grab 10 random words and their translations
+
+
+		// put them into the wordList in user
+
+
+		//res.send(the word list)
+
+
+	},
+
+	// render the quiz page
 	quizPage: function(req, res){
 		
 		res.render('quiz',{
 			list:list[0]
+
+
 		});
 	},
 	quizSubmit: function(req,res){
